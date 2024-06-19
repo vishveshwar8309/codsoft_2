@@ -26,20 +26,21 @@ const CreateProjectScreen = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const resp = await createProject({
-      title,
-      description,
-      teamMembers,
-      startDate,
-      endDate,
-    }).unwrap();
-
-    if (resp?.data?.message !== "Server error") {
+    try {
+      const resp = await createProject({
+        title,
+        description,
+        teamMembers,
+        startDate,
+        endDate,
+      }).unwrap();
       window.confirm("Restart the session to see newly added project");
       toast.success("successful");
       navigate("/projectmanagementtool");
-    } else {
-      toast.error(resp.message);
+    } catch (error) {
+      toast.error(
+        "some team members not found. please refresh the page and enter names correctly"
+      );
     }
   };
 
